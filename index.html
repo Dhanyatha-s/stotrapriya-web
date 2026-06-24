@@ -153,6 +153,45 @@
     .txn-notice { font-size: 12px; color: var(--mid); background: var(--off-white); border: 1px solid var(--border); border-radius: var(--r); padding: 10px 14px; margin-bottom: 14px; line-height: 1.6; }
     .txn-notice strong { color: var(--dark); }
 
+    /* UPI intent button */
+    .upi-pay-btn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      width: 100%; padding: 18px;
+      background: #1a1a1a; color: #fff;
+      border: none; border-radius: var(--r);
+      font-family: inherit; font-size: 16px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background .15s, transform .1s;
+      margin-bottom: 8px;
+    }
+    .upi-pay-btn:hover { background: #333; transform: translateY(-1px); }
+    .upi-pay-btn svg  { flex-shrink: 0; }
+    .upi-apps-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; margin-bottom: 20px;
+      font-size: 11px; color: var(--mid);
+    }
+    .app-pill {
+      padding: 3px 10px; border: 1px solid var(--border);
+      border-radius: 20px; font-size: 11px; color: var(--mid);
+      background: var(--off-white);
+    }
+    /* Desktop QR fallback */
+    .desktop-only { display: none; }
+    @media(hover: none) and (pointer: coarse) {
+      /* touch = mobile: show UPI button, hide QR */
+      .mobile-only  { display: block; }
+      .desktop-only { display: none; }
+    }
+    @media(hover: hover) and (pointer: fine) {
+      /* mouse = desktop: hide UPI button, show QR */
+      .mobile-only  { display: none; }
+      .desktop-only { display: block; }
+    }
+    /* fallback for anything ambiguous — show both */
+    .mobile-only  { display: block; }
+    .desktop-only { display: block; }
+
     /* ── PAGE 5 ── */
     .success-page { max-width: 480px; margin: 0 auto; padding: 60px 24px 80px; text-align: center; }
     .success-circle { width: 72px; height: 72px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
@@ -393,46 +432,63 @@
       <p class="pay-steps-title" data-en="How to Pay" data-kn="ಪಾವತಿ ಹೇಗೆ ಮಾಡುವುದು">How to Pay</p>
       <div class="pay-step-row">
         <div class="pay-step-num">1</div>
-        <div class="pay-step-text" data-en="Open any UPI app (PhonePe, GPay, Paytm, etc.) on your phone." data-kn="ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಯಾವುದಾದರೂ UPI ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯಿರಿ (PhonePe, GPay, Paytm, ಇತ್ಯಾದಿ).">Open any UPI app (PhonePe, GPay, Paytm, etc.) on your phone.</div>
+        <div class="pay-step-text mobile-only" data-en='Tap "Pay via UPI" below — your UPI app opens automatically with the amount pre-filled.' data-kn='"UPI ಮೂಲಕ ಪಾವತಿಸಿ" ಟ್ಯಾಪ್ ಮಾಡಿ — ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್ ಮೊತ್ತದೊಂದಿಗೆ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ತೆರೆಯುತ್ತದೆ.'>Tap <strong>"Pay via UPI"</strong> below — your UPI app opens automatically with the amount pre-filled.</div>
+        <div class="pay-step-text desktop-only" data-en="Scan the QR code below using any UPI app on your phone." data-kn="ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಯಾವುದೇ UPI ಅಪ್ಲಿಕೇಶನ್ ಬಳಸಿ ಕೆಳಗಿನ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.">Scan the QR code below using any UPI app on your phone.</div>
       </div>
       <div class="pay-step-row">
         <div class="pay-step-num">2</div>
-        <div class="pay-step-text" data-en="Scan the QR code below or copy the UPI ID and pay manually." data-kn="ಕೆಳಗಿನ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ಅಥವಾ UPI ID ನಕಲಿಸಿ ಮತ್ತು ಕೈಯಾರೆ ಪಾವತಿಸಿ.">Scan the QR code below <strong>or</strong> copy the UPI ID and pay manually.</div>
+        <div class="pay-step-text" data-en="Complete the payment in your UPI app. Do not close this page." data-kn="ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಪಾವತಿ ಪೂರ್ಣಗೊಳಿಸಿ. ಈ ಪುಟವನ್ನು ಮುಚ್ಚಬೇಡಿ.">Complete the payment in your UPI app. <strong>Do not close this page.</strong></div>
       </div>
       <div class="pay-step-row">
         <div class="pay-step-num">3</div>
-        <div class="pay-step-text" data-en="After payment, your UPI app shows a Transaction ID. Paste it below and click Confirm." data-kn="ಪಾವತಿಯ ನಂತರ, ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್ ವ್ಯವಹಾರ ID ತೋರಿಸುತ್ತದೆ. ಅದನ್ನು ಕೆಳಗೆ ಅಂಟಿಸಿ ಮತ್ತು ದೃಢೀಕರಿಸಿ ಕ್ಲಿಕ್ ಮಾಡಿ.">After payment, your UPI app shows a <strong>Transaction ID</strong>. Paste it below and click Confirm.</div>
+        <div class="pay-step-text" data-en="Come back here, enter the Transaction ID shown in your UPI app, and click Confirm." data-kn="ಇಲ್ಲಿಗೆ ಹಿಂತಿರುಗಿ, ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ತೋರಿಸಿದ Transaction ID ನಮೂದಿಸಿ ಮತ್ತು ದೃಢೀಕರಿಸಿ ಕ್ಲಿಕ್ ಮಾಡಿ.">Come back here, enter the <strong>Transaction ID</strong> shown in your UPI app, and click Confirm.</div>
       </div>
     </div>
 
-    <div class="qr-section">
-      <div class="qr-wrapper">
-         <img src="upi-qr.jpeg" width="180" height="180" style="display:block;"/>
-        
-         <!--
-    <div class="qr-placeholder">
-      <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-        <path d="M14 14h2v2h-2zM18 14h2v2h-2zM16 16h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"></path>
-      </svg>
-      <span data-en="Place your QR here" data-kn="ನಿಮ್ಮ QR ಇಲ್ಲಿ ಇರಿಸಿ">
-        Place your QR here
-      </span>
+    <!-- MOBILE: UPI deep link button -->
+    <div class="mobile-only" style="margin-bottom:20px; text-align:center;">
+      <a id="upiDeepLink" href="#" class="upi-pay-btn" onclick="openUPI(event)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span id="upiPayBtnText" data-en="Pay via UPI" data-kn="UPI ಮೂಲಕ ಪಾವತಿಸಿ">Pay via UPI</span>
+        <span id="upiPayAmt" style="font-size:14px; opacity:0.8;"></span>
+      </a>
+      <div class="upi-apps-row">
+        <span data-en="Works with" data-kn="ಇವುಗಳೊಂದಿಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ">Works with</span>
+        <span class="app-pill">PhonePe</span>
+        <span class="app-pill">GPay</span>
+        <span class="app-pill">Paytm</span>
+        <span class="app-pill">BHIM</span>
+      </div>
     </div>
-    -->
+
+    <!-- DESKTOP: QR code fallback -->
+    <div class="desktop-only qr-section" style="margin-bottom:20px;">
+      <p style="font-size:12px; color:var(--mid); margin-bottom:14px; text-align:center;" data-en="Scan with any UPI app on your phone" data-kn="ನಿಮ್ಮ ಫೋನ್‌ನಲ್ಲಿ ಯಾವುದಾದರೂ UPI ಅಪ್ಲಿಕೇಶನ್‌ನಿಂದ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ">Scan with any UPI app on your phone</p>
+      <div class="qr-wrapper">
+       
+          <img src="upi-qr.jpeg" width="180" height="180" style="display:block;"/>
+       
+        <div class="qr-placeholder">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+            <path d="M14 14h2v2h-2zM18 14h2v2h-2zM16 16h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/>
+          </svg>
+          <span data-en="Place your QR here" data-kn="ನಿಮ್ಮ QR ಇಲ್ಲಿ ಇರಿಸಿ">Place your QR here</span>
+        </div>
       </div>
-      <div class="divider-or"><span data-en="or pay to UPI ID" data-kn="ಅಥವಾ UPI ID ಗೆ ಪಾವತಿಸಿ">or pay to UPI ID</span></div>
-      <div class="upi-chip" onclick="copyUPI()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span id="upiIdText">9741813787@ybl</span>
+      <div class="divider-or" style="max-width:280px; margin: 14px auto;"><span data-en="or pay to UPI ID" data-kn="ಅಥವಾ UPI ID ಗೆ ಪಾವತಿಸಿ">or pay to UPI ID</span></div>
+      <div style="text-align:center;">
+        <div class="upi-chip" onclick="copyUPI()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="upiIdText">yourupiid@upi</span>
+        </div>
+        <p class="copy-hint" data-en="Click to copy UPI ID" data-kn="UPI ID ನಕಲಿಸಲು ಕ್ಲಿಕ್ ಮಾಡಿ">Click to copy UPI ID</p>
       </div>
-      <p class="copy-hint" data-en="Tap to copy UPI ID" data-kn="UPI ID ನಕಲಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ">Tap to copy UPI ID</p>
     </div>
 
     <div class="txn-notice">
-      <span data-en="After paying, open your UPI app → Transaction History → copy the Transaction ID (e.g. 406723849021) and paste below." data-kn="ಪಾವತಿಸಿದ ನಂತರ, ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯಿರಿ → ವ್ಯವಹಾರ ಇತಿಹಾಸ → Transaction ID ನಕಲಿಸಿ (ಉದಾ: 406723849021) ಮತ್ತು ಕೆಳಗೆ ಅಂಟಿಸಿ.">After paying, open your UPI app &rarr; <strong>Transaction History</strong> &rarr; copy the <strong>Transaction ID</strong> (e.g. 406723849021) and paste below.</span>
+      <span data-en="After paying, open your UPI app → Transaction History → copy the Transaction ID (looks like: 406723849021) and paste it below." data-kn="ಪಾವತಿಸಿದ ನಂತರ, ನಿಮ್ಮ UPI ಅಪ್ಲಿಕೇಶನ್ ತೆರೆಯಿರಿ → ವ್ಯವಹಾರ ಇತಿಹಾಸ → Transaction ID ನಕಲಿಸಿ (ಉದಾ: 406723849021) ಮತ್ತು ಕೆಳಗೆ ಅಂಟಿಸಿ.">After paying, open your UPI app &rarr; <strong>Transaction History</strong> &rarr; copy the <strong>Transaction ID</strong> (looks like: 406723849021) and paste it below.</span>
     </div>
 
     <div class="field" id="f_txn" style="margin-bottom:20px;">
